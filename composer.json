@@ -1,0 +1,20 @@
+{
+    "name": "mixislv/oauth-php-tfl",
+    "description": "Andy Smith's basic php library for OAuth + Twiter, Facebook, Linkedin implementation.",
+    "require": {
+        "jacobkiers/oauth": "^1.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mikus Rozenbergs",
+            "homepage": "http://mixis.lv"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "mixisLv\\OAuth\\": "src"
+        }
+    }
+}
