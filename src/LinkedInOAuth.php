@@ -4,6 +4,7 @@ namespace mixisLv\OAuth;
 
 use JacobKiers\OAuth\SignatureMethod\HmacSha1;
 use JacobKiers\OAuth\Consumer\Consumer;
+use JacobKiers\OAuth\Token\Token;
 use JacobKiers\OAuth\Request\Request;
 
 /**
@@ -47,7 +48,7 @@ class LinkedInOAuth {
         $this->sha1_method = new HmacSha1();
         $this->consumer = new Consumer($consumer_key, $consumer_secret);
         if (!empty($oauth_token) && !empty($oauth_token_secret)) {
-            $this->token = new Consumer($oauth_token, $oauth_token_secret);
+            $this->token = new Token($oauth_token, $oauth_token_secret);
         } else {
             $this->token = NULL;
         }
@@ -65,7 +66,7 @@ class LinkedInOAuth {
         $requestUrl = $this->requestTokenURL();
         $r = $this->oAuthRequest($requestUrl, $this->request_options, 'GET');
         $token = $this->oAuthParseResponse($r);
-        $this->token = new Consumer($token['oauth_token'], $token['oauth_token_secret'], $oauth_callback);
+        $this->token = new Token($token['oauth_token'], $token['oauth_token_secret']);
         return $token;
     }
 
@@ -109,7 +110,7 @@ class LinkedInOAuth {
         $r = $this->oAuthRequest($this->accessTokenURL(), array('oauth_verifier' => $verifier), 'GET');
         error_log('$r: '.print_r($r, true));
         $token = $this->oAuthParseResponse($r);
-        $this->token = new Consumer($token['oauth_token'], $token['oauth_token_secret']);
+        $this->token = new Token($token['oauth_token'], $token['oauth_token_secret']);
         return $token;
     }
 

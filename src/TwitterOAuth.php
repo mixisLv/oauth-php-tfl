@@ -4,6 +4,7 @@ namespace mixisLv\OAuth;
 
 use JacobKiers\OAuth\SignatureMethod\HmacSha1;
 use JacobKiers\OAuth\Consumer\Consumer;
+use JacobKiers\OAuth\Token\Token;
 use JacobKiers\OAuth\Request\Request;
 use JacobKiers\OAuth\Util;
 
@@ -66,7 +67,7 @@ class TwitterOAuth {
     $this->sha1_method = new HmacSha1();
     $this->consumer = new Consumer($consumer_key, $consumer_secret);
     if (!empty($oauth_token) && !empty($oauth_token_secret)) {
-      $this->token = new Consumer($oauth_token, $oauth_token_secret);
+      $this->token = new Token($oauth_token, $oauth_token_secret);
     } else {
       $this->token = NULL;
     }
@@ -86,7 +87,7 @@ class TwitterOAuth {
 
     $request = $this->oAuthRequest($this->requestTokenURL(), $parameters, 'GET');
     $token = Util::parseParameters($request);
-    $this->token = new Consumer($token['oauth_token'], $token['oauth_token_secret']);
+    $this->token = new Token($token['oauth_token'], $token['oauth_token_secret']);
     return $token;
   }
 
@@ -121,7 +122,7 @@ class TwitterOAuth {
     }
     $request = $this->oAuthRequest($this->accessTokenURL(), $this->request_options, 'GET');
     $token = Util::parseParameters($request);
-    $this->token = new Consumer($token['oauth_token'], $token['oauth_token_secret']);
+    $this->token = new Token($token['oauth_token'], $token['oauth_token_secret']);
     return $token;
   }
 
@@ -141,7 +142,7 @@ class TwitterOAuth {
     $parameters['x_auth_mode'] = 'client_auth';
     $request = $this->oAuthRequest($this->accessTokenURL(), $parameters, 'POST');
     $token = Util::parseParameters($request);
-    $this->token = new Consumer($token['oauth_token'], $token['oauth_token_secret']);
+    $this->token = new Token($token['oauth_token'], $token['oauth_token_secret']);
     return $token;
   }
 
