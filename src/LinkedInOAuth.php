@@ -169,11 +169,11 @@ class LinkedInOAuth {
         return $response;
     }
 
-    function getUserByOAuth2AccessToken($resource, $accessToken) {
+    function getUserByOAuth2AccessToken($resource, $accessToken, $msdk = false) {
         $opts = array(
             'http'=>array(
                 'method' => "GET",
-                'header' => "Authorization: Bearer " . $accessToken . "\r\n" . "x-li-format: json\r\n"
+                'header' => "Authorization: Bearer " . $accessToken . "\r\n" . "x-li-format: json\r\n". ($msdk ? "x-li-src: msdk\r\n" : "")
             )
         );
 
